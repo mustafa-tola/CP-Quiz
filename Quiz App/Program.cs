@@ -84,9 +84,8 @@ namespace Quiz_App
             }
             else
             {
-                Console.WriteLine("Better Luck Next Time");
+                Console.WriteLine("Hope You Play It Next Time");
             }
-            
         }
     }
 
