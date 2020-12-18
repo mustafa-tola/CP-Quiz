@@ -1,4 +1,5 @@
 ﻿using System;
+using static Quiz_App.Class1;
 
 namespace Quiz_App
 {
@@ -6,8 +7,8 @@ namespace Quiz_App
     {
         static void Main(string[] args)
         {
+            Class1 cla = new Class1();
             string input = " ";
-            string[] questions = new string [3] { "Pakistan came into being in the year", "Liaquat Ali Khan was assasinated in", "Allama Iqbal was born in which city" };
             string[] correctAnswersOptions = new string [3] { "c", "d", "b" };
             string[,] answers = new string[3, 4]
             {
@@ -45,17 +46,17 @@ namespace Quiz_App
             }
             if(input== "s")
             {
-                for (int i = 0; i < questions.Length; i++)
+                for (int i = 0; i < cla.questions.Length; i++)
                 {
                     Console.Clear();
                     Console.WriteLine("{0,60}", "Quiz App");
                     Console.Write("{0,40}", " ");
-                    for (int index = 0; index < (questions[i].Length + 2); index++)
+                    for (int index = 0; index < (cla.questions[i].Length + 2); index++)
                     {
 
                         Console.Write("{0}","_");
                     }
-                    Console.WriteLine("\n{0,40}|{1,-35}|\n", " ", questions[i]);
+                    Console.WriteLine("\n{0,40}|{1,-35}|\n", " ", cla.questions[i]);
                     Console.Write("", " ");
                     for (int j = 0; j < 4; j++)
                     {
@@ -77,7 +78,7 @@ namespace Quiz_App
                         scoreOfQuiz += 1;
                     }
                 }
-                percentageOfQuiz = scoreOfQuiz * 100 / questions.Length;
+                percentageOfQuiz = scoreOfQuiz * 100 / cla.questions.Length;
                 Console.Clear();
                 Console.WriteLine("Your Score is {0}", scoreOfQuiz);
                 Console.WriteLine("Your Percentage is {0}%",(float) percentageOfQuiz);
