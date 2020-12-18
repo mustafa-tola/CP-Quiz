@@ -1,5 +1,5 @@
 ﻿using System;
-using static Quiz_App.Class1;
+using static Quiz_App.QuizDB;
 
 namespace Quiz_App
 {
@@ -7,17 +7,11 @@ namespace Quiz_App
     {
         static void Main(string[] args)
         {
-            Class1 cla = new Class1();
-            string input = " ";
-            string[] correctAnswersOptions = new string [3] { "c", "d", "b" };
-            string[,] answers = new string[3, 4]
-            {
-                {"1950","1945","1947","1943"},
-                {"1931","1930","1948","1951"},
-                {"Karachi","Sialkot","Lahore","Rawalpindi"}
-            };
+            QuizDB quizDB = new QuizDB();
+            string permissionToStartQuiz = " ";
             int scoreOfQuiz = 0;
             float percentageOfQuiz = 0;
+            string answerFromUser = "";
             Console.WriteLine("{0,60}", "Quiz App");
             Console.WriteLine("{0,25} {1}"," ","__________________________________________________________");
             Console.WriteLine("{0,25} | {1,34} {2,19} |", " ","Instructions"," ");
@@ -32,56 +26,65 @@ namespace Quiz_App
             Console.WriteLine("{0,25} |{1} {2,12}|", " ", "4.There is no negative marking in this quiz", " ");
             Console.WriteLine("{0,25} {1}", " ", "----------------------------------------------------------");
             Console.WriteLine("{0,27} Please Enter s to start the quiz or q to quit the quiz", " ");
-            Console.CursorLeft = (Console.WindowWidth - 12) / 2;
-            input = Console.ReadLine();
-            while (input != "s")
+            do
             {
-                if(input == "q")
+                Console.CursorLeft = (Console.WindowWidth - 12) / 2;
+                permissionToStartQuiz = Console.ReadLine();
+                if(permissionToStartQuiz == "q")
                 {
                     break;
                 }
-                Console.WriteLine("{0,27} Please Enter s to start the quiz or q to quit the quiz", " ");
-                Console.CursorLeft = (Console.WindowWidth - 12) / 2;
-                input = Console.ReadLine();
-            }
-            if(input== "s")
+            } while (permissionToStartQuiz != "s");
+            if (permissionToStartQuiz== "s")
             {
-                for (int i = 0; i < cla.questions.Length; i++)
+                for (int i = 0; i < quizDB.questions.Length; i++)
                 {
                     Console.Clear();
                     Console.WriteLine("{0,60}", "Quiz App");
                     Console.Write("{0,40}", " ");
-                    for (int index = 0; index < (cla.questions[i].Length + 2); index++)
+                    for (int index = 0; index < (quizDB.questions[i].Length + 2); index++)
                     {
 
                         Console.Write("{0}","_");
-                    }
-                    Console.WriteLine("\n{0,40}|{1,-35}|\n", " ", cla.questions[i]);
+                    };
+                    Console.WriteLine("\n{0,40}|{1,-35}|\n", " ", quizDB.questions[i]);
                     Console.Write("", " ");
                     for (int j = 0; j < 4; j++)
                     {
-                        Console.WriteLine("{0,40}|{1}.{2,-33}|"," ", (j + 1), answers[i, j]);
+                        Console.WriteLine("{0,40}|{1}.{2,-33}|"," ", (j + 1), quizDB.answers[i, j]);
                     }
-                    Console.CursorLeft = (Console.WindowWidth - 27) / 2;
-                    Console.WriteLine("Please enter the answer");
-                    Console.CursorLeft = (Console.WindowWidth - 5) / 2;
-                    string answerFromUser = Console.ReadLine();
-                    while((answerFromUser != "a" && answerFromUser != "b") && ((answerFromUser != "c" && answerFromUser != "d")))
+                    do
                     {
-                        Console.CursorLeft = (Console.WindowWidth - 27) / 2;
-                        Console.WriteLine("Please enter the answer");
+                        Console.WriteLine("\n {0,45}Please enter the answer"," ");
+                        Console.WriteLine("{0,43} {1} {2,33}", " ", "    i.a for 1st option", " ");
+                        Console.WriteLine("{0,43} {1} {2,32}", " ", "    ii.b for 2nd option", " ");
+                        Console.WriteLine("{0,43} {1} {2,31}", " ", "    iii.c for 3rd option", " ");
+                        Console.WriteLine("{0,43} {1} {2,32}", " ", "    iv.d for 4th option", " ");
                         Console.CursorLeft = (Console.WindowWidth - 5) / 2;
                         answerFromUser = Console.ReadLine();
-                    }
-                    if(answerFromUser == correctAnswersOptions[i])
+                    } while ((answerFromUser != "a" && answerFromUser != "b") && ((answerFromUser != "c" && answerFromUser != "d")));
+                    if(answerFromUser == quizDB.correctAnswersOptions[i])
                     {
                         scoreOfQuiz += 1;
                     }
                 }
-                percentageOfQuiz = scoreOfQuiz * 100 / cla.questions.Length;
+                percentageOfQuiz = scoreOfQuiz * 100 / quizDB.questions.Length;
                 Console.Clear();
-                Console.WriteLine("Your Score is {0}", scoreOfQuiz);
-                Console.WriteLine("Your Percentage is {0}%",(float) percentageOfQuiz);
+                Console.WriteLine("{0,60}", "Quiz App");
+                Console.WriteLine("{0,25} {1}", " ", "__________________________________________________________");
+                Console.WriteLine("{0,25} | {1,34} {2,19} |", " ", "Report Card", " ");
+                Console.WriteLine("{0,26}|{1,-55} |"," ", "Your Score is " + scoreOfQuiz);
+                Console.WriteLine("{0,26}|{1,-55} |", " ", "Your Percentage is " + percentageOfQuiz);
+                if (percentageOfQuiz > 50)
+                {
+                    Console.WriteLine("{0,26}|{1,-55} |", " ", "Congratulations! You Have Passed");
+                }
+                else
+                {
+                    Console.WriteLine("{0,26}|{1,-55} |", " ", "Better Luck Next Time");
+                }
+                Console.WriteLine("{0,25} {1}", " ", "----------------------------------------------------------");
+
             }
             else
             {
